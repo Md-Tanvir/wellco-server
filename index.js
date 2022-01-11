@@ -39,19 +39,16 @@ client.connect((err) => {
     const result = await coursesCollection.insertOne(req.body);
     res.send(result);
   });
-  //   ADD NEW BLOG
-  app.post("/addBlog", async (req, res) => {
-    const result = await blogsCollection.insertOne(req.body);
-    res.send(result);
-  });
 
-   // DELETE ANY COURSE
-   app.delete("/deleteCourse/:id", async (req, res) => {
+  // DELETE ANY COURSE
+  app.delete("/deleteCourse/:id", async (req, res) => {
     const result = await coursesCollection.deleteOne({
       _id: ObjectId(req.params.id),
     });
     res.send(result);
   });
+
+  
 
   // GET ALL REVIEWS
   app.get("/reviews", async (req, res) => {
@@ -65,11 +62,34 @@ client.connect((err) => {
     res.send(result);
   });
 
+  // DELETE ANY Review
+  app.delete("/deleteReview/:id", async (req, res) => {
+    const result = await reviewsCollection.deleteOne({
+      _id: ObjectId(req.params.id),
+    });
+    res.send(result);
+  });
+
   // GET ALL BLOGS
   app.get("/blogs", async (req, res) => {
     const result = await blogsCollection.find({}).toArray();
     res.send(result);
   });
+  //  ADD NEW BLOG
+  app.post("/addBlog", async (req, res) => {
+    const result = await blogsCollection.insertOne(req.body);
+    res.send(result);
+  });
+
+  // DELETE ANY BLOG
+  app.delete("/deleteBlog/:id", async (req, res) => {
+    const result = await blogsCollection.deleteOne({
+      _id: ObjectId(req.params.id),
+    });
+    res.send(result);
+  });
+
+
 
   // MAKING USER COLLECTION
   app.put("/users", async (req, res) => {
@@ -88,8 +108,8 @@ client.connect((err) => {
     res.send(result);
   });
 
-   //GIVING ADMIN ROLE
- app.put("/users/admin", async (req, res) => {
+  //GIVING ADMIN ROLE
+  app.put("/users/admin", async (req, res) => {
     const user = req.body;
     const filter = { email: user.email };
     const updateDoc = { $set: { role: "admin" } };
@@ -107,9 +127,7 @@ client.connect((err) => {
       isAdmin = true;
     }
     res.send({ admin: isAdmin });
-});
-
-
+  });
 });
 
 app.listen(port, () => {
