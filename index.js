@@ -34,6 +34,14 @@ client.connect((err) => {
     res.send(result);
   });
 
+   // DELETE ANY COURSE
+   app.delete("/deleteCourse/:id", async (req, res) => {
+    const result = await coursesCollection.deleteOne({
+      _id: ObjectId(req.params.id),
+    });
+    res.send(result);
+  });
+
   // GET ALL REVIEWS
   app.get("/reviews", async (req, res) => {
     const result = await reviewsCollection.find({}).toArray();
