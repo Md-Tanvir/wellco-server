@@ -34,6 +34,17 @@ client.connect((err) => {
     res.send(result);
   });
 
+  //   ADD NEW COURSE
+  app.post("/addCourse", async (req, res) => {
+    const result = await coursesCollection.insertOne(req.body);
+    res.send(result);
+  });
+  //   ADD NEW BLOG
+  app.post("/addBlog", async (req, res) => {
+    const result = await blogsCollection.insertOne(req.body);
+    res.send(result);
+  });
+
    // DELETE ANY COURSE
    app.delete("/deleteCourse/:id", async (req, res) => {
     const result = await coursesCollection.deleteOne({
@@ -45,6 +56,12 @@ client.connect((err) => {
   // GET ALL REVIEWS
   app.get("/reviews", async (req, res) => {
     const result = await reviewsCollection.find({}).toArray();
+    res.send(result);
+  });
+  // MAKING REVIEW DATA
+  app.post("/reviews", async (req, res) => {
+    const user = req.body;
+    const result = await reviewsCollection.insertOne(user);
     res.send(result);
   });
 
