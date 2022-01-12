@@ -48,7 +48,6 @@ client.connect((err) => {
     res.send(result);
   });
 
-
   // GET ALL REVIEWS
   app.get("/reviews", async (req, res) => {
     const result = await reviewsCollection.find({}).toArray();
@@ -95,7 +94,22 @@ client.connect((err) => {
     res.send(result);
   });
 
+  //GET ALL ORDERS
 
+  app.get("/allOrders", async (req, res) => {
+    const cursor = ordersCollection.find({});
+    const orders = await cursor.toArray();
+    res.send(orders);
+  });
+
+  // DELETE ANY ORDER
+
+  app.delete("/deleteOrder/:id", async (req, res) => {
+    const result = await ordersCollection.deleteOne({
+      _id: ObjectId(req.params.id),
+    });
+    res.send(result);
+  });
 
 
   // MAKING USER COLLECTION
