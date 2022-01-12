@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 client.connect((err) => {
   const coursesCollection = client.db("wellco").collection("courses");
   const reviewsCollection = client.db("wellco").collection("reviews");
-  // const ordersCollection = client.db("wellco").collection("orders");
+  const ordersCollection = client.db("wellco").collection("orders");
   const usersCollection = client.db("wellco").collection("users");
   const blogsCollection = client.db("wellco").collection("blogs");
 
@@ -48,7 +48,6 @@ client.connect((err) => {
     res.send(result);
   });
 
-  
 
   // GET ALL REVIEWS
   app.get("/reviews", async (req, res) => {
@@ -88,6 +87,14 @@ client.connect((err) => {
     });
     res.send(result);
   });
+
+  // CONFIRM YOUR ORDER
+
+  app.post("/confirmOrder", async (req, res) => {
+    const result = await ordersCollection.insertOne(req.body);
+    res.send(result);
+  });
+
 
 
 
